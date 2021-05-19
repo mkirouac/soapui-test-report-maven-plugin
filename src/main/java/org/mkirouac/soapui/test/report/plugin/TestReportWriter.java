@@ -1,8 +1,12 @@
 package org.mkirouac.soapui.test.report.plugin;
 
+import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.OutputStreamWriter;
 import java.io.Writer;
+import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 
@@ -25,7 +29,7 @@ public class TestReportWriter {
 			if (!success) {
 				String fileContent = null;
 				try {
-					fileContent = new String(Files.readAllBytes(Paths.get(projectResult.getFolder() + "/" + stepResult.getFileName())));
+					fileContent = new String(Files.readAllBytes(Paths.get(projectResult.getFolder() + "/" + stepResult.getFileName())), StandardCharsets.UTF_8);
 				} catch (IOException e) {
 					throw new RuntimeException("Failed to read file " + stepResult.getFileName(), e);
 				}
@@ -37,7 +41,7 @@ public class TestReportWriter {
 		}
 		sb.append("</testsuite>");
 
-		try (Writer fileWriter = new FileWriter(rootDirectory + "/" + fileName, false)) {
+		try (OutputStreamWriter fileWriter = new OutputStreamWriter(new FileOutputStream(rootDirectory + "/" + fileName, false), StandardCharsets.UTF_8)) {//new FileWriter(rootDirectory + "/" + fileName, false)) {
 			fileWriter.write(sb.toString());
 		} catch (IOException e) {
 			throw new RuntimeException("Failed to write test report", e);
