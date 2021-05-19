@@ -19,6 +19,7 @@ public class StepResultParser {
 		
 		StepResult result = new StepResult();
 		
+		result.setFileName(fileName);
 		result.setTestSuiteName(splitted[TEST_SUITE_PART_INDEX]);
 		result.setTestCaseName(splitted[TEST_CASE_PART_INDEX]);
 		result.setStepName(splitted[STEP_NAME_PART_INDEX] + "-" + splitted[STEP_NAME_NUMBER_PART_INDEX]);

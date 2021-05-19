@@ -5,6 +5,7 @@ import lombok.Data;
 @Data
 public class StepResult {
 	
+	private String fileName;
 	private String testSuiteName;
 	private String testCaseName;
 	private String stepName;

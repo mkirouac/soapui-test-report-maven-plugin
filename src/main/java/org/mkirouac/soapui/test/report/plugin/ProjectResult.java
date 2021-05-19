@@ -9,6 +9,7 @@ import lombok.Data;
 @AllArgsConstructor
 public class ProjectResult {
 
+	private final String folder;
 	private final String projectName;
 	private final List<StepResult> stepResults;
 	

@@ -3,6 +3,8 @@ package org.mkirouac.soapui.test.report.plugin;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.Writer;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 
 public class TestReportWriter {
 
@@ -21,7 +23,15 @@ public class TestReportWriter {
 			boolean success = stepResult.isSuccess();
 			sb.append(String.format("<testcase name=\"%s\" classname=\"%s\" time=\"0\">", testCaseName, className));
 			if (!success) {
-				sb.append("<failure type=\"SoapUIStepFailure\">The SoapUI step has failed</failure>");
+				String fileContent = null;
+				try {
+					fileContent = new String(Files.readAllBytes(Paths.get(projectResult.getFolder() + "/" + stepResult.getFileName())));
+				} catch (IOException e) {
+					throw new RuntimeException("Failed to read file " + stepResult.getFileName(), e);
+				}
+				sb.append("<failure type=\"SoapUIStepFailure\">")
+				.append("<![CDATA[").append(fileContent).append("]]>")
+				.append("</failure>");
 			}
 			sb.append("</testcase>");
 		}

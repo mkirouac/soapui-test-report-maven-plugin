@@ -22,7 +22,7 @@ public class ProjectResultParser {
 		for(File projectResultDirectory : projectResultDirectories) {
 			
 			List<StepResult> projectTestResults = extractTestResultsFromDirectory(projectResultDirectory);
-			projectResults.add(new ProjectResult(projectResultDirectory.getName(), projectTestResults));
+			projectResults.add(new ProjectResult(projectResultDirectory.getAbsolutePath(), projectResultDirectory.getName(), projectTestResults));
 			System.out.println("Parsed " + projectTestResults.size() + " test step results for project " + projectResultDirectory.getName());
 		}
 		
